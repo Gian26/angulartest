@@ -1,11 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
 @import '~bootstrap/dist/css/bootstrap.min.css';
+
 body {
     background-color: #F5F4F9;
 }
+
 .bg-purple {
     background-color: #32368E !important;
 }
+
 .text-purple {
     color: #32368E;
 }
@@ -13,3 +15,23 @@ body {
 .custom-shadow {
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
+
+.table {
+    border-collapse: separate;
+    border-spacing:0 15px;
+}
+
+th {
+    font-weight:400;
+}
+
+tr>th:first-child {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+tr>td:last-child, th:last-child {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
