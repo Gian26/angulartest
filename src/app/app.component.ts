@@ -7,14 +7,14 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  @ViewChild('closeAgregarModal', ) private agregarModal: ElementRef;
-  @ViewChild('closeEliminarModal', ) private eliminarModal: ElementRef;
+  @ViewChild('closeAgregarModal') private agregarModal: ElementRef;
+  @ViewChild('closeEliminarModal') private eliminarModal: ElementRef;
   title = 'basic-crud';
-  
-  array:any = [];
+
+  array: any = [];
   crudForm: any;
-  selectedElement: number;
- 
+  selectedElement: number = -1;
+
 
   constructor(private formBuilder: FormBuilder) {
     this.crudForm = this.formBuilder.group(
@@ -29,12 +29,15 @@ export class AppComponent {
     );
   }
 
-  onSubmit(datos) {
+  addElement(datos) {
 
-    console.log(this.array.push(datos));
-    console.log(this.array);
+    this.array.push(datos);
     this.agregarModal.nativeElement.click();
     this.crudForm.reset();
+  }
+
+  deselect() {
+    this.selectedElement = -1;
   }
 
   selectElement(index: number) {
@@ -46,10 +49,26 @@ export class AppComponent {
     this.array.splice(this.selectedElement, 1);
   }
 
-  editElement() {
+  setForm(index: number) {
+    this.selectElement(index);
 
+    let formInput = this.crudForm.controls;
+    let element = this.array[this.selectedElement];
+
+    formInput.folio.setValue(element.folio);
+    formInput.servicio.setValue(element.servicio);
+    formInput.serieInicial.setValue(element.serieInicial);
+    formInput.serieFinal.setValue(element.serieFinal);
+    formInput.cantidad.setValue(element.cantidad);
+    formInput.estado.setValue(element.estado);
+    
   }
 
+  editElement(datos) {
+    this.array[this.selectedElement] = datos;
+    this.agregarModal.nativeElement.click();
+    this.crudForm.reset();
+  }
   searchElement() {
 
   }

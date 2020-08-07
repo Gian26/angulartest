@@ -43,8 +43,9 @@
               </form>
             </div>
             <div class="col-6 text-right">
-              <svg data-toggle="modal" data-target="#exampleModal" width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-plus-square-fill text-purple pointer-element"
-                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <svg (click)="deselect()" data-toggle="modal" data-target="#Modal" width="1.5em" height="1.5em"
+                viewBox="0 0 16 16" class="bi bi-plus-square-fill text-purple pointer-element" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd"
                   d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4a.5.5 0 0 0-1 0v3.5H4a.5.5 0 0 0 0 1h3.5V12a.5.5 0 0 0 1 0V8.5H12a.5.5 0 0 0 0-1H8.5V4z" />
               </svg>
@@ -87,14 +88,16 @@
               <td *ngIf="!element.estado">Cerrado</td>
               <td>
                 <div>
-                  <svg (click)="selectElement(i)" data-toggle="modal" data-target="#exampleModal" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square text-warning mr-3 pointer-element"
+                  <svg (click)="setForm(i)" data-toggle="modal" data-target="#Modal" width="1em" height="1em"
+                    viewBox="0 0 16 16" class="bi bi-pencil-square text-warning mr-3 pointer-element"
                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path
                       d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                     <path fill-rule="evenodd"
                       d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
                   </svg>
-                  <svg (click)="selectElement(i)" data-toggle="modal" data-target="#eliminarModal" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-dash text-danger mb-0 h3 pointer-element"
+                  <svg (click)="selectElement(i)" data-toggle="modal" data-target="#eliminarModal" width="1em"
+                    height="1em" viewBox="0 0 16 16" class="bi bi-dash text-danger mb-0 h3 pointer-element"
                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M3.5 8a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.5-.5z" />
                   </svg>
@@ -110,9 +113,9 @@
           <div class=" p-2">
             <select class="browser-default custom-select border-0 rounded-0 custom-shadow" name="paginacion" id="">
               <option value="5">5 elementos</option>
-              <option value="1">10 elementos</option>
-              <option value="2">20 elementos</option>
-              <option value="3">30 elementos</option>
+              <option value="10">10 elementos</option>
+              <option value="20">20 elementos</option>
+              <option value="30">30 elementos</option>
             </select>
           </div>
           <div class="p-2">
@@ -144,7 +147,7 @@
 
 
         <!-- Modal de Agregar/ Actualizar  -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="Modal" tabindex="-1" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered ">
             <div class="modal-content border-0 rounded-0 border-modal px-3">
               <div class="modal-header d-inline  border-0">
@@ -153,48 +156,50 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                  
-                  <div class="d-flex justify-content-center">
-                    <h5 class="modal-title" id="exampleModalLabel">Agregar Servicio</h5>
 
-                  </div>
-                
+                <div class="d-flex justify-content-center">
+                  <h5 *ngIf="selectedElement < 0" class="modal-title" id="exampleModalLabel">Agregar Servicio</h5>
+                  <h5 *ngIf="selectedElement >= 0" class="modal-title" id="exampleModalLabel">Actualizar Servicio</h5>
+
+                </div>
+
 
               </div>
               <div class="modal-body">
-                <form [formGroup]="crudForm" (ngSubmit)="onSubmit(crudForm.value)">
+                <form [formGroup]="crudForm" >
                   <div class="form-group">
                     <label>Folio</label>
-                    <input  formControlName=folio type="text" class="form-control" placeholder="Folio">
+                    <input formControlName=folio type="text" class="form-control" placeholder="Folio">
 
                   </div>
                   <div class="form-group">
                     <label>Servicio</label>
-                    <input  formControlName=servicio type="text" class="form-control" placeholder="Servicio">
+                    <input formControlName=servicio type="text" class="form-control" placeholder="Servicio">
 
                   </div>
                   <div class="form-group">
                     <label>Serie inicial</label>
-                    <input  formControlName=serieInicial type="text" class="form-control" placeholder="Serie inicial">
+                    <input formControlName=serieInicial type="text" class="form-control" placeholder="Serie inicial">
                   </div>
                   <div class="form-group">
                     <label>Serie final</label>
-                    <input  formControlName=serieFinal type="text" class="form-control" placeholder="Serie final">
+                    <input formControlName=serieFinal type="text" class="form-control" placeholder="Serie final">
                   </div>
                   <div class="form-group">
                     <label>Cantidad</label>
-                    <input  formControlName=cantidad type="text" class="form-control" placeholder="Cantidad">
+                    <input formControlName=cantidad type="text" class="form-control" placeholder="Cantidad">
                   </div>
                   <div>
                     <label>Estado</label>
                   </div>
                   <div class="form-group form-check">
 
-                    <input  formControlName=estado type="checkbox" class="form-check-input">
+                    <input formControlName=estado type="checkbox" class="form-check-input">
                     <label class="form-check-label font-weight-normal">Abierto</label>
                   </div>
                   <div class="d-flex justify-content-center">
-                    <button  [disabled]="crudForm.invalid" type="submit" class="btn btn-success" >
+                    <button *ngIf="selectedElement < 0" (click)="addElement(crudForm.value)" [disabled]="crudForm.invalid" type="submit"
+                      class="btn btn-success">
                       Agregar
                       <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus h3 mb-0" fill="currentColor"
                         xmlns="http://www.w3.org/2000/svg">
@@ -203,6 +208,9 @@
                         <path fill-rule="evenodd"
                           d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z" />
                       </svg>
+                    </button>
+                    <button *ngIf="selectedElement >= 0" (click)="editElement(crudForm.value)" [disabled]="crudForm.invalid" class="btn btn-warning">
+                      Actualizar
                     </button>
                   </div>
                 </form>
@@ -224,18 +232,19 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                  
-                  <div class="d-flex justify-content-center">
-                    <h5 class="modal-title" id="exampleModalLabel">Eliminar Servicio</h5>
 
-                  </div>
-                
+                <div class="d-flex justify-content-center">
+                  <h5 class="modal-title" id="exampleModalLabel">Eliminar Servicio</h5>
+
+                </div>
+
 
               </div>
               <div class="modal-body">
                 <div class="text-center">
-                  <p *ngIf="array[selectedElement]" class="h5 text-danger font-weight-bold">¿Estás seguro de eliminar el servicio {{array[selectedElement].servicio}}?</p>
-                  
+                  <p *ngIf="array[selectedElement]" class="h5 text-danger font-weight-bold">¿Estás seguro de eliminar el
+                    servicio {{array[selectedElement].servicio}}?</p>
+
                 </div>
               </div>
               <div class="modal-footer border-0 d-inline">
@@ -250,7 +259,7 @@
           </div>
         </div>
 
-        
+
 
 
       </div>
