@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -12,9 +12,10 @@ export class AppComponent {
   title = 'basic-crud';
 
   array: any = [];
+  filterArray: any = [];
   crudForm: any;
   selectedElement: number = -1;
-
+  inputForm = new FormControl('');;
 
   constructor(private formBuilder: FormBuilder) {
     this.crudForm = this.formBuilder.group(
@@ -27,6 +28,7 @@ export class AppComponent {
         estado: false
       }
     );
+
   }
 
   addElement(datos) {
@@ -61,7 +63,7 @@ export class AppComponent {
     formInput.serieFinal.setValue(element.serieFinal);
     formInput.cantidad.setValue(element.cantidad);
     formInput.estado.setValue(element.estado);
-    
+
   }
 
   editElement(datos) {
@@ -69,7 +71,20 @@ export class AppComponent {
     this.agregarModal.nativeElement.click();
     this.crudForm.reset();
   }
-  searchElement() {
 
+  searchElement() {
+    console.log(this.inputForm.value);
+    let containableString = this.inputForm.value
+    if (!containableString) return;
+    let filtroArray = this.array.filter((element) => { 
+      return element.servicio.includes(containableString) ||
+      element.serieInicial.includes(containableString) ||
+      element.serieFinal.includes(containableString);
+    });
+    console.log(filtroArray);
+    this.filterArray = filtroArray
+    // console.log(this.array.forEach(element => {
+    //   return 0;
+    // }));
   }
 }

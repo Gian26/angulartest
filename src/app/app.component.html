@@ -37,7 +37,8 @@
               <form>
                 <!-- <div class="form-group col-md-12 col-lg-4 "> -->
                 <div class="form-group">
-                  <input type="search" class="form-control" placeholder="Filtrar por Servicio o Serie" type="text">
+                  <input [formControl]=inputForm (keyup)="searchElement()" type="search" class="form-control"
+                    placeholder="Filtrar por Servicio o Serie" type="text">
 
                 </div>
               </form>
@@ -76,7 +77,8 @@
 
             </tr>
           </thead>
-          <tbody>
+          <tbody *ngIf="!inputForm.value">
+            
             <tr *ngFor="let element of array; let i = index">
               <th scope="row">{{i + 1}}</th>
               <td>{{element.folio}}</td>
@@ -105,7 +107,37 @@
 
               </td>
             </tr>
+          </tbody>
+          <tbody *ngIf="inputForm.value">
+            
+            <tr *ngFor="let element of filterArray; let i = index">
+              <th scope="row">{{i + 1}}</th>
+              <td>{{element.folio}}</td>
+              <td>{{element.servicio}}</td>
+              <td>{{element.serieInicial}}</td>
+              <td>{{element.serieFinal}}</td>
+              <td>{{element.cantidad}}</td>
+              <td *ngIf="element.estado">Abierto</td>
+              <td *ngIf="!element.estado">Cerrado</td>
+              <td>
+                <div>
+                  <svg (click)="setForm(i)" data-toggle="modal" data-target="#Modal" width="1em" height="1em"
+                    viewBox="0 0 16 16" class="bi bi-pencil-square text-warning mr-3 pointer-element"
+                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                    <path fill-rule="evenodd"
+                      d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                  </svg>
+                  <svg (click)="selectElement(i)" data-toggle="modal" data-target="#eliminarModal" width="1em"
+                    height="1em" viewBox="0 0 16 16" class="bi bi-dash text-danger mb-0 h3 pointer-element"
+                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M3.5 8a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.5-.5z" />
+                  </svg>
+                </div>
 
+              </td>
+            </tr>
           </tbody>
         </table>
 
@@ -166,7 +198,7 @@
 
               </div>
               <div class="modal-body">
-                <form [formGroup]="crudForm" >
+                <form [formGroup]="crudForm">
                   <div class="form-group">
                     <label>Folio</label>
                     <input formControlName=folio type="text" class="form-control" placeholder="Folio">
@@ -198,8 +230,8 @@
                     <label class="form-check-label font-weight-normal">Abierto</label>
                   </div>
                   <div class="d-flex justify-content-center">
-                    <button *ngIf="selectedElement < 0" (click)="addElement(crudForm.value)" [disabled]="crudForm.invalid" type="submit"
-                      class="btn btn-success">
+                    <button *ngIf="selectedElement < 0" (click)="addElement(crudForm.value)"
+                      [disabled]="crudForm.invalid" type="submit" class="btn btn-success">
                       Agregar
                       <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus h3 mb-0" fill="currentColor"
                         xmlns="http://www.w3.org/2000/svg">
@@ -209,7 +241,8 @@
                           d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z" />
                       </svg>
                     </button>
-                    <button *ngIf="selectedElement >= 0" (click)="editElement(crudForm.value)" [disabled]="crudForm.invalid" class="btn btn-warning">
+                    <button *ngIf="selectedElement >= 0" (click)="editElement(crudForm.value)"
+                      [disabled]="crudForm.invalid" class="btn btn-warning">
                       Actualizar
                     </button>
                   </div>
