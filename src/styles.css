@@ -54,3 +54,7 @@ input {
 label {
     font-weight:700;
 }
+
+.pointer-element {
+    cursor: pointer;
+}
