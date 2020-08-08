@@ -58,3 +58,6 @@ label {
 .pointer-element {
     cursor: pointer;
 }
+tr {
+    border: 1px solid black;
+}

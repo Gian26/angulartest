@@ -15,7 +15,7 @@ export class AppComponent {
   filterArray: any = [];
   crudForm: any;
   selectedElement: number = -1;
-  inputForm = new FormControl('');;
+  inputForm = new FormControl('');
 
   constructor(private formBuilder: FormBuilder) {
     this.crudForm = this.formBuilder.group(

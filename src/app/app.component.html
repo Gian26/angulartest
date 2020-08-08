@@ -80,7 +80,7 @@
             </thead>
             <tbody *ngIf="!inputForm.value">
   
-              <tr *ngFor="let element of array; let i = index">
+              <tr style="border: 1px solid black;" *ngFor="let element of array; let i = index" class="custom-shadow">
                 <th scope="row">{{i + 1}}</th>
                 <td>{{element.folio}}</td>
                 <td>{{element.servicio}}</td>
@@ -111,7 +111,7 @@
             </tbody>
             <tbody *ngIf="inputForm.value">
   
-              <tr *ngFor="let element of filterArray; let i = index">
+              <tr *ngFor="let element of filterArray; let i = index" class="custom-shadow">
                 <th scope="row">{{i + 1}}</th>
                 <td>{{element.folio}}</td>
                 <td>{{element.servicio}}</td>
