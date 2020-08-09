@@ -8,7 +8,9 @@
     border-collapse: separate;
     border-spacing: 0 15px;
 }
-
+.bg-blue-sky {
+    background: #E7F4FB;
+}
 th {
     font-weight: 400;
 }
