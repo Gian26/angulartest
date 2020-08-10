@@ -34,16 +34,16 @@ export class TableComponent implements OnInit {
     let newId = this.getAllProducts().length <= 0 ? 1 : this.getAllProducts()[this.getAllProducts().length - 1].id + 1;
     console.log({ id: newId, ...$event });
 
-    this.addProduct({ id: newId, ...$event })
+    this.productService.addProduct({ id: newId, ...$event });
   }
 
   receiveEditedProduct($event) {
     console.log({...this.selectedProduct, ...$event});
-    this.editProduct(this.selectedProduct.id, {...this.selectedProduct, ...$event})
+    this.productService.editProduct(this.selectedProduct.id, {...this.selectedProduct, ...$event});
   }
 
   receiveDeletedProduct($event) {
-    this.deleteProduct($event);
+    this.productService.deleteProduct($event);
   }
 
 
@@ -76,22 +76,6 @@ export class TableComponent implements OnInit {
 
   getProduct(id: number = -1) {
     this.selectedProduct = this.productService.getProduct(id);
-  }
-
-  deleteProduct(id: number) {
-    this.productService.deleteProduct(id);
-    // console.log(this.getAllProducts());
-  }
-
-  editProduct(id: number, product: Product) {
-    // let prod = { id: id, folio: '10', servicio: '10', serieInicial: '10', serieFinal: '10', cantidad: 30, estado: true };
-    this.productService.editProduct(id, product);
-  }
-
-  addProduct(product: Product) {
-    //let newId = this.getAllProducts().length <= 0 ? 1 : this.getAllProducts()[this.getAllProducts().length - 1].id + 1;
-    //let newP = { id: newId, folio: '1', servicio: '1', serieInicial: '1', serieFinal: '1', cantidad: 20, estado: false };
-    this.productService.addProduct(product);
   }
 
 }

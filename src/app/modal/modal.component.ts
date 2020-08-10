@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Product } from '../models/product';
 
@@ -16,6 +16,8 @@ export class ModalComponent implements OnInit, OnChanges {
   @Output() productEvent = new EventEmitter<any>();
   @Output() productEdited = new EventEmitter<any>();
   @Output() productDeleted = new EventEmitter<any>();
+  @ViewChild('closeAgregarModal') completeModal: ElementRef;
+  // @ViewChild('closeMap') private mapModal: ElementRef;
 
   constructor(private formBuilder: FormBuilder) {
     this.crudForm = this.formBuilder.group(
@@ -47,11 +49,14 @@ export class ModalComponent implements OnInit, OnChanges {
 
   sendNewProduct(data) {
     this.productEvent.emit(data);
+    this.completeModal.nativeElement.click();
     this.crudForm.reset();
+
   }
 
   sendEditedProduct(data) {
     this.productEdited.emit(data);
+    this.completeModal.nativeElement.click();    
     this.crudForm.reset();
   }
 
