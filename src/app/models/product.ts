@@ -1,4 +1,5 @@
 export class Product {
+    id: number;
     folio: string;
     servicio: string;
     serieInicial: string;
