@@ -10,10 +10,9 @@ import { ProductService } from '../services/product.service';
 export class TableComponent implements OnInit {
 
   constructor(private productService: ProductService) { }
-  products: Product[]; //sustituir donde se usa por el servicio
-  selectedProduct: Product;// = { id: 0, folio: 'folio', servicio: 'servicio', serieInicial: 'serie inicial', serieFinal: 'serie final', cantidad: 233, estado: true };// = { folio: '', servicio: '', serieInicial: '', serieFinal: '', estado: false };
+  products: Product[];
+  selectedProduct: Product;
 
-  // message: Product = { id: 0, folio: 'folio', servicio: 'servicio', serieInicial: 'serie inicial', serieFinal: 'serie final', cantidad: 233, estado: true };
   paginationOptions = [
     { value: 5, text: '5 elementos' },
     { value: 10, text: '10 elementos' },
@@ -21,16 +20,46 @@ export class TableComponent implements OnInit {
   ]
 
   selectedPagination = this.paginationOptions[0];
-  actualNuberOfElementsInPage: number;
   searchInput: string;
+
+  firstEle = 0;
+  lastEle = this.setNumberOfElements();
+  actualPage = 1;
+  //productsPerPage = this.selectedPagination.value;
+
+
   ngOnInit() {
-    this.products = this.getAllProducts();
-    //this.setNumberOfElements(this.array);
+  }
+  numPages() {
+    return Math.ceil(this.getAllProducts().length / this.selectedPagination.value);
+  }
+  previousPage() {
+    if (this.actualPage > 1) {
+      this.actualPage--;
+      this.changePage(this.actualPage);
+    }
+  }
+
+  nextPage() {
+    if (this.actualPage < this.numPages()) {
+      this.actualPage++;
+      this.changePage(this.actualPage);
+    }
+  }
+
+
+  changePage(page) {
+    // Validate page
+    if (page < 1) page = 1;
+    if (page > this.numPages()) page = this.numPages();
+
+    this.firstEle = (page - 1) * this.selectedPagination.value;
+    this.lastEle = (page * this.selectedPagination.value) > this.getAllProducts().length ? this.getAllProducts().length : (page * this.selectedPagination.value);
+
   }
 
 
   receiveNewProduct($event) {
-    // console.log($event);
     let newId = this.getAllProducts().length <= 0 ? 1 : this.getAllProducts()[this.getAllProducts().length - 1].id + 1;
     console.log({ id: newId, ...$event });
 
@@ -38,8 +67,8 @@ export class TableComponent implements OnInit {
   }
 
   receiveEditedProduct($event) {
-    console.log({...this.selectedProduct, ...$event});
-    this.productService.editProduct(this.selectedProduct.id, {...this.selectedProduct, ...$event});
+    console.log({ ...this.selectedProduct, ...$event });
+    this.productService.editProduct(this.selectedProduct.id, { ...this.selectedProduct, ...$event });
   }
 
   receiveDeletedProduct($event) {
@@ -47,12 +76,12 @@ export class TableComponent implements OnInit {
   }
 
 
-  choosePagination({ value: numberOfElements }) {
+  // choosePagination({ value: numberOfElements }) {
 
-    console.log(numberOfElements);
-    console.log(this.searchInput);
+  //   this.changePage(this.actualPage);
+  //   console.log(numberOfElements);
 
-  }
+  // }
 
   setNumberOfElements() {
     return this.fillTable().length < this.selectedPagination.value ? this.fillTable().length : this.selectedPagination.value;
@@ -60,12 +89,8 @@ export class TableComponent implements OnInit {
 
   fillTable(): Product[] {
     if (!this.searchInput) {
-      //this.setNumberOfElements(this.array);
-      // console.log(this.getAllProducts().length);
-
       return this.getAllProducts();
     } else {
-      // this.setNumberOfElements(filteredArray);
       return this.productService.searchProducts(this.searchInput);
     }
   }
@@ -77,5 +102,6 @@ export class TableComponent implements OnInit {
   getProduct(id: number = -1) {
     this.selectedProduct = this.productService.getProduct(id);
   }
+
 
 }

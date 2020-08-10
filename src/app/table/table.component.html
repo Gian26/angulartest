@@ -41,8 +41,11 @@
       </tr>
     </thead>
     <tbody>
-
-      <tr *ngFor="let element of fillTable(); let i = index" class="custom-shadow">
+      <!-- | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize -->
+      <!-- <tr *ngFor="let item of fillTable() "> 
+        content here 
+      </tr>-->
+      <tr *ngFor="let element of fillTable() | slice: firstEle: lastEle ; let i = index" class="custom-shadow">
         <th scope="row">{{i + 1}}</th>
         <td>{{element.folio}}</td>
         <td>{{element.servicio}}</td>
@@ -78,7 +81,8 @@
 
 <div class="d-flex align-items-center justify-content-end">
   <div class=" p-2">
-    <select type="number" [(ngModel)]="selectedPagination" (ngModelChange)="choosePagination($event)"
+    <!-- (ngModelChange)="choosePagination($event)" -->
+    <select type="number" [(ngModel)]="selectedPagination" 
       class="browser-default custom-select border-0 rounded-0 custom-shadow" name="paginacion">
       <option *ngFor="let option of paginationOptions" [ngValue]="option">{{option.text}}</option>
     </select>
@@ -86,16 +90,16 @@
   <div class="p-2">
     <nav aria-label="Page navigation example">
       <ul class=" pagination my-4">
-        <li class="mr-2 page-item">
-          <a class="page-link border-0 rounded custom-shadow bg-blue-sky" href="#" aria-label="Previous">
+        <li [ngClass]="{'disabled' : actualPage == 1}" class="mr-2 page-item">
+          <a (click)="previousPage()" class="page-link border-0 rounded custom-shadow bg-blue-sky pointer-element"
+            aria-label="Previous">
             <span aria-hidden="true">&lt;</span>
           </a>
         </li>
-        <!-- <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-        <li class="page-item">
-          <a class="page-link border-0 rounded custom-shadow bg-blue-sky " href="#" aria-label="Next">
+
+        <li [ngClass]="{'disabled' : actualPage == numPages()}" class="page-item">
+          <a (click)="nextPage()" class="page-link border-0 rounded custom-shadow bg-blue-sky pointer-element"
+            aria-label="Next">
             <span aria-hidden="true">&gt;</span>
           </a>
         </li>
@@ -103,7 +107,7 @@
     </nav>
   </div>
   <div class=" pl-2">
-    <span>{{setNumberOfElements()}}/</span>
+    <span>{{lastEle}}/</span>
     <span>{{fillTable().length}}</span>
 
   </div>

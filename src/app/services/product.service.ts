@@ -11,8 +11,14 @@ export class ProductService {
     { id: 2, folio: '2', servicio: '2', serieInicial: '2', serieFinal: '2', cantidad: 30, estado: true },
     { id: 3, folio: '3', servicio: '3', serieInicial: '3', serieFinal: '3', cantidad: 24, estado: false },
     { id: 4, folio: '4', servicio: '4', serieInicial: '4', serieFinal: '4', cantidad: 242, estado: true },
-    { id: 5, folio: '4', servicio: '4', serieInicial: '4', serieFinal: '4', cantidad: 24, estado: true },
-    { id: 6, folio: '4', servicio: '4', serieInicial: '4', serieFinal: '4', cantidad: 22, estado: false },
+    { id: 5, folio: '5', servicio: '4', serieInicial: '4', serieFinal: '4', cantidad: 24, estado: true },
+    { id: 6, folio: '6', servicio: '4', serieInicial: '4', serieFinal: '4', cantidad: 22, estado: false },
+    { id: 7, folio: '7', servicio: '4', serieInicial: '4', serieFinal: '4', cantidad: 22, estado: false },
+    { id: 8, folio: '8', servicio: '4', serieInicial: '4', serieFinal: '4', cantidad: 22, estado: false },
+    { id: 9, folio: '9', servicio: '4', serieInicial: '4', serieFinal: '4', cantidad: 22, estado: false },
+    { id: 10, folio: '10', servicio: '4', serieInicial: '4', serieFinal: '4', cantidad: 22, estado: false },
+    { id: 11, folio: '11', servicio: '4', serieInicial: '4', serieFinal: '4', cantidad: 22, estado: false },
+    { id: 12, folio: '12', servicio: '4', serieInicial: '4', serieFinal: '4', cantidad: 22, estado: false },
 
   ];
 
