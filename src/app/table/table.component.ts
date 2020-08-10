@@ -11,6 +11,7 @@ export class TableComponent implements OnInit {
 
   constructor(private productService: ProductService) { }
   products: Product[]; //sustituir donde se usa por el servicio
+  selectedProduct: Product;
 
   paginationOptions = [
     { value: 5, text: '5 elementos' },
@@ -40,7 +41,7 @@ export class TableComponent implements OnInit {
   fillTable(): Product[] {
     if (!this.searchInput) {
       //this.setNumberOfElements(this.array);
-      console.log(this.getAllProducts().length);
+      // console.log(this.getAllProducts().length);
 
       return this.getAllProducts();
     } else {
@@ -53,16 +54,25 @@ export class TableComponent implements OnInit {
     return this.productService.getAllProducts();
   }
 
+  getProduct(id: number) {
+    this.selectedProduct = this.productService.getProduct(id);
+  }
+
   deleteProduct(id: number) {
     this.productService.deleteProduct(id);
+    // console.log(this.getAllProducts());
   }
 
   editProduct(id: number, product: Product) {
-    this.productService.editProduct(id, product);
+    let prod = {id: id, folio: '10', servicio: '10', serieInicial: '10', serieFinal: '10', cantidad: 30, estado: true };
+    this.productService.editProduct(id, prod);
   }
 
-  addProduct(product: Product) {
-    this.productService.addProduct(product);
+  addProduct(product: any) {
+    let newId = this.getAllProducts().length <= 0 ? 1 : this.getAllProducts()[this.getAllProducts().length - 1].id + 1;
+    let newP = { id: newId, folio: '1', servicio: '1', serieInicial: '1', serieFinal: '1', cantidad: 20, estado: false };
+    this.productService.addProduct(newP);
+    // console.log(this.getAllProducts());
   }
 
 }

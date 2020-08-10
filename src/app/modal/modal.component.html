@@ -1,0 +1,118 @@
+<!-- Modal de Agregar/ Actualizar  -->
+<div class="modal fade" id="Modal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered ">
+    <div class="modal-content border-0 rounded-0 border-modal px-3">
+      <div class="modal-header d-inline  border-0">
+        <div class="d-flex justify-content-end">
+          <button #closeAgregarModal type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="d-flex justify-content-center">
+          <!-- <h5 *ngIf="selectedElement < 0" class="modal-title" id="exampleModalLabel">Agregar Servicio</h5>
+                <h5 *ngIf="selectedElement >= 0" class="modal-title" id="exampleModalLabel">Actualizar Servicio</h5> -->
+
+        </div>
+
+
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="crudForm">
+          <div class="form-group">
+            <label>Folio</label>
+            <input formControlName=folio type="text" class="form-control" placeholder="Folio">
+
+          </div>
+          <div class="form-group">
+            <label>Servicio</label>
+            <input formControlName=servicio type="text" class="form-control" placeholder="Servicio">
+
+          </div>
+          <div class="form-group">
+            <label>Serie inicial</label>
+            <input formControlName=serieInicial type="text" class="form-control" placeholder="Serie inicial">
+          </div>
+          <div class="form-group">
+            <label>Serie final</label>
+            <input formControlName=serieFinal type="text" class="form-control" placeholder="Serie final">
+          </div>
+          <div class="form-group">
+            <label>Cantidad</label>
+            <input formControlName=cantidad type="text" class="form-control" placeholder="Cantidad">
+          </div>
+          <div>
+            <label>Estado</label>
+          </div>
+          <div class="form-group form-check">
+
+            <input formControlName=estado type="checkbox" class="form-check-input">
+            <label class="form-check-label font-weight-normal">Abierto</label>
+          </div>
+          <div class="d-flex justify-content-center">
+
+            <!-- *ngIf="selectedElement < 0" (click)="addElement(crudForm.value)"-->
+            <button  [disabled]="crudForm.invalid" type="submit" class="btn btn-success">
+              Agregar
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus h3 mb-0" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z" />
+                <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z" />
+              </svg>
+            </button>
+            
+            <!-- *ngIf="selectedElement >= 0" (click)="editElement(crudForm.value)"
+                     -->
+            <button [disabled]="crudForm.invalid" class="btn btn-warning">
+              Actualizar
+            </button>
+          </div>
+        </form>
+      </div>
+      <!-- <div class="modal-footer border-0">
+              </div> -->
+    </div>
+  </div>
+</div>
+
+<!-- Modal de eliminar  -->
+<div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered ">
+    <div class="modal-content rounded-0 border-danger px-3">
+      <div class="modal-header d-inline  border-0">
+        <div class="d-flex justify-content-end">
+          <button #closeEliminarModal type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="d-flex justify-content-center">
+          <h5 class="modal-title" id="exampleModalLabel">Eliminar Servicio</h5>
+
+        </div>
+
+
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          <!-- *ngIf="products[0]" -->
+          <p class="h5 text-danger font-weight-bold">
+            ¿Estás seguro de eliminar el
+            servicio
+            <!-- {{products[0].servicio}} -->
+            ?</p>
+
+        </div>
+      </div>
+      <div class="modal-footer border-0 d-inline">
+        <div class="d-flex justify-content-center">
+          <button class="btn btn-danger w-25">Eliminar</button>
+        </div>
+        <div class="d-flex justify-content-center">
+          <button data-dismiss="modal" class="btn btn-warning w-25">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
