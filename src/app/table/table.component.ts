@@ -11,8 +11,9 @@ export class TableComponent implements OnInit {
 
   constructor(private productService: ProductService) { }
   products: Product[]; //sustituir donde se usa por el servicio
-  selectedProduct: Product;
+  selectedProduct: Product;// = { id: 0, folio: 'folio', servicio: 'servicio', serieInicial: 'serie inicial', serieFinal: 'serie final', cantidad: 233, estado: true };// = { folio: '', servicio: '', serieInicial: '', serieFinal: '', estado: false };
 
+  // message: Product = { id: 0, folio: 'folio', servicio: 'servicio', serieInicial: 'serie inicial', serieFinal: 'serie final', cantidad: 233, estado: true };
   paginationOptions = [
     { value: 5, text: '5 elementos' },
     { value: 10, text: '10 elementos' },
@@ -26,6 +27,25 @@ export class TableComponent implements OnInit {
     this.products = this.getAllProducts();
     //this.setNumberOfElements(this.array);
   }
+
+
+  receiveNewProduct($event) {
+    // console.log($event);
+    let newId = this.getAllProducts().length <= 0 ? 1 : this.getAllProducts()[this.getAllProducts().length - 1].id + 1;
+    console.log({ id: newId, ...$event });
+
+    this.addProduct({ id: newId, ...$event })
+  }
+
+  receiveEditedProduct($event) {
+    console.log({...this.selectedProduct, ...$event});
+    this.editProduct(this.selectedProduct.id, {...this.selectedProduct, ...$event})
+  }
+
+  receiveDeletedProduct($event) {
+    this.deleteProduct($event);
+  }
+
 
   choosePagination({ value: numberOfElements }) {
 
@@ -54,7 +74,7 @@ export class TableComponent implements OnInit {
     return this.productService.getAllProducts();
   }
 
-  getProduct(id: number) {
+  getProduct(id: number = -1) {
     this.selectedProduct = this.productService.getProduct(id);
   }
 
@@ -64,15 +84,14 @@ export class TableComponent implements OnInit {
   }
 
   editProduct(id: number, product: Product) {
-    let prod = {id: id, folio: '10', servicio: '10', serieInicial: '10', serieFinal: '10', cantidad: 30, estado: true };
-    this.productService.editProduct(id, prod);
+    // let prod = { id: id, folio: '10', servicio: '10', serieInicial: '10', serieFinal: '10', cantidad: 30, estado: true };
+    this.productService.editProduct(id, product);
   }
 
-  addProduct(product: any) {
-    let newId = this.getAllProducts().length <= 0 ? 1 : this.getAllProducts()[this.getAllProducts().length - 1].id + 1;
-    let newP = { id: newId, folio: '1', servicio: '1', serieInicial: '1', serieFinal: '1', cantidad: 20, estado: false };
-    this.productService.addProduct(newP);
-    // console.log(this.getAllProducts());
+  addProduct(product: Product) {
+    //let newId = this.getAllProducts().length <= 0 ? 1 : this.getAllProducts()[this.getAllProducts().length - 1].id + 1;
+    //let newP = { id: newId, folio: '1', servicio: '1', serieInicial: '1', serieFinal: '1', cantidad: 20, estado: false };
+    this.productService.addProduct(product);
   }
 
 }

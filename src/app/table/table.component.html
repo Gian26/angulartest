@@ -8,7 +8,7 @@
   </div>
 
   <div class="col-6 text-right">
-    <svg (click)="addProduct({})" data-toggle="modal" data-target="#Modal" data-backdrop="static" data-keyboard="false" width="1.5em" height="1.5em"
+    <svg (click)="getProduct()" data-toggle="modal" data-target="#Modal" data-backdrop="static" data-keyboard="false" width="1.5em" height="1.5em"
       viewBox="0 0 16 16" class="bi bi-plus-square-fill text-purple pointer-element" fill="currentColor"
       xmlns="http://www.w3.org/2000/svg">
       <path fill-rule="evenodd"
@@ -53,7 +53,7 @@
         <td *ngIf="!element.estado">Cerrado</td>
         <td>
           <div>
-            <svg (click)="editProduct(element.id, {})" data-toggle="modal" data-target="#Modal" data-backdrop="static" data-keyboard="false" width="1em" height="1em"
+            <svg (click)="getProduct(element.id)" data-toggle="modal" data-target="#Modal" data-backdrop="static" data-keyboard="false" width="1em" height="1em"
               viewBox="0 0 16 16" class="bi bi-pencil-square text-warning mr-3 pointer-element" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
               <path
@@ -61,7 +61,7 @@
               <path fill-rule="evenodd"
                 d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
             </svg>
-            <svg (click)="deleteProduct(element.id)" data-toggle="modal" data-target="#eliminarModal" width="1em"
+            <svg (click)="getProduct(element.id)" data-toggle="modal" data-target="#eliminarModal" width="1em"
               height="1em" viewBox="0 0 16 16" class="bi bi-dash text-danger mb-0 h3 pointer-element"
               fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" d="M3.5 8a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.5-.5z" />
@@ -109,4 +109,8 @@
 
 </div>
 
-<app-modal></app-modal>
+<app-modal [product]="selectedProduct" 
+(productEvent)="receiveNewProduct($event)" 
+(productEdited)="receiveEditedProduct($event)"
+(productDeleted)="receiveDeletedProduct($event)"
+></app-modal>
