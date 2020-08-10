@@ -47,10 +47,12 @@ export class ModalComponent implements OnInit, OnChanges {
 
   sendNewProduct(data) {
     this.productEvent.emit(data);
+    this.crudForm.reset();
   }
 
   sendEditedProduct(data) {
     this.productEdited.emit(data);
+    this.crudForm.reset();
   }
 
   sendDeletedProduct(data) {
