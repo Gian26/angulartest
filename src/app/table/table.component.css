@@ -1,0 +1,30 @@
+
+.text-purple {
+    color: #32368E;
+}
+
+
+.table {
+    border-collapse: separate;
+    border-spacing: 0 15px;
+}
+.bg-blue-sky {
+    background: #E7F4FB;
+}
+th {
+    font-weight: 400;
+}
+
+tr>th:first-child {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+tr>td:last-child, th:last-child {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.pointer-element {
+    cursor: pointer;
+}
